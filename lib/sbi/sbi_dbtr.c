@@ -516,7 +516,7 @@ int sbi_dbtr_read_trig(unsigned long smode,
 
 	if (trig_idx_base >= hs->total_trigs ||
 	    trig_idx_base + trig_count >= hs->total_trigs)
-		return SBI_ERR_INVALID_PARAM;
+		return SBI_ERR_BAD_RANGE;
 
 	if (sbi_dbtr_shmem_disabled(hs))
 		return SBI_ERR_NO_SHMEM;
@@ -566,20 +566,20 @@ int sbi_dbtr_install_trig(unsigned long smode,
 		if (!dbtr_trigger_supported(TDATA1_GET_TYPE(ctrl))) {
 			*out = _idx;
 			sbi_hart_unmap_saddr();
-			return SBI_ERR_FAILED;
+			return SBI_ERR_INVALID_PARAM;
 		}
 
 		if (!dbtr_trigger_valid(TDATA1_GET_TYPE(ctrl), ctrl)) {
 			*out = _idx;
 			sbi_hart_unmap_saddr();
-			return SBI_ERR_FAILED;
+			return SBI_ERR_INVALID_PARAM;
 		}
 		sbi_hart_unmap_saddr();
 	}
 
 	if (hs->available_trigs < trig_count) {
 		*out = hs->available_trigs;
-		return SBI_ERR_FAILED;
+		return SBI_ERR_BAD_RANGE;
 	}
 
 	/* Install triggers */
