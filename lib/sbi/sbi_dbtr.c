@@ -529,9 +529,9 @@ int sbi_dbtr_read_trig(unsigned long smode,
 		xmit = &entry->data;
 		trig = INDEX_TO_TRIGGER((_idx + trig_idx_base));
 		xmit->tstate = cpu_to_lle(trig->state);
-		xmit->tdata1 = cpu_to_lle(trig->tdata1);
-		xmit->tdata2 = cpu_to_lle(trig->tdata2);
-		xmit->tdata3 = cpu_to_lle(trig->tdata3);
+		xmit->tdata1 = cpu_to_lle(csr_read(CSR_TDATA1));
+		xmit->tdata2 = cpu_to_lle(csr_read(CSR_TDATA2));
+		xmit->tdata3 = cpu_to_lle(csr_read(CSR_TDATA1));
 	}
 	sbi_hart_unmap_saddr();
 
